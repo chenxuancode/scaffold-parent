@@ -1,0 +1,36 @@
+server:
+  port: 9090
+spring:
+  profiles:
+    active: dev
+  application:
+    name: scaffold
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacoshost:8848
+        heart-beat-timeout:
+        namespace: ${spring.profiles.active}
+      config:
+        namespace: ${spring.profiles.active}
+        server-addr: nacoshost:8848
+        file-extension: yaml
+        enabled: true
+        ext-config:
+          - data-id: common.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+mybatis-plus:
+  type-aliases-package: com.sleeper.scaffold.entity
+  mapper-locations: classpath:mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+logging:
+  level:
+    com.sleeper.scaffold.mapper: info
